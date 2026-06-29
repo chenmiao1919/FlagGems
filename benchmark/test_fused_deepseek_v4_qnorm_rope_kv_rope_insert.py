@@ -17,7 +17,14 @@ import logging
 import pytest
 import torch
 
-from flag_gems.fused import fused_deepseek_v4_qnorm_rope_kv_rope_insert
+import flag_gems
+
+if flag_gems.vendor_name == "cambricon":
+    from flag_gems.runtime.backend._cambricon.fused import (
+        fused_deepseek_v4_qnorm_rope_kv_rope_insert,
+    )
+else:
+    from flag_gems.fused import fused_deepseek_v4_qnorm_rope_kv_rope_insert
 
 from . import base
 

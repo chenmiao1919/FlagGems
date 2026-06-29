@@ -21,12 +21,22 @@ import triton
 
 import flag_gems
 from flag_gems.utils import get_device_properties
-from flag_gems.utils.pointwise_dynamic import (
-    CodeGenConfig,
-    ComplexMode,
-    FunctionSchema,
-    pointwise_dynamic,
-)
+
+if flag_gems.vendor_name == "cambricon":
+    from flag_gems.runtime.backend._cambricon.utils.pointwise_dynamic import (
+        CodeGenConfig,
+        ComplexMode,
+        FunctionSchema,
+        pointwise_dynamic,
+    )
+else:
+    from flag_gems.utils.pointwise_dynamic import (
+        CodeGenConfig,
+        ComplexMode,
+        FunctionSchema,
+        pointwise_dynamic,
+    )
+
 from flag_gems.utils.tensor_wrapper import StridedBuffer
 
 MAX_GRID_SIZES = (65535, 65535, 65535)

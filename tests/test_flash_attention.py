@@ -134,13 +134,19 @@ def gems_flash_fwd(
     q = q.transpose(1, 2)
     k = k.transpose(1, 2)
     v = v.transpose(1, 2)
+    if vendor_name == "cambricon":
+        from flag_gems.runtime.backend._cambricon.ops import attention
+
+        flash_attention_forward = attention.flash_attention_forward
+    else:
+        flash_attention_forward = flag_gems.ops.flash_attention_forward
     (
         out,
         lse,
         seed,
         offset,
         debug_softmax,
-    ) = flag_gems.flash_attention_forward(
+    ) = flash_attention_forward(
         q,
         k,
         v,
@@ -660,4 +666,7 @@ def test_flash_fwd_dropout(
     )
 
     dropout_ratio = torch.sum(debug_softmax < 0) / torch.sum(debug_softmax != 0)
-    np.testing.assert_allclose(dropout_ratio.to("cpu"), dropout_p, rtol=5e-2)
+    dropout_ratio = dropout_ratio.to("cpu")
+    if vendor_name == "cambricon":
+        dropout_ratio = dropout_ratio.item()
+    np.testing.assert_allclose(dropout_ratio, dropout_p, rtol=5e-2)

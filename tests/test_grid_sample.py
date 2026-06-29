@@ -29,7 +29,12 @@ Test coverage description:
 import pytest
 import torch
 
-from flag_gems.ops import grid_sample
+import flag_gems
+
+if flag_gems.vendor_name == "cambricon":
+    from flag_gems.runtime.backend._cambricon.ops import grid_sample
+else:
+    from flag_gems.ops import grid_sample
 
 from . import conftest as cfg
 
