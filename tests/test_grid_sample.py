@@ -30,11 +30,7 @@ import pytest
 import torch
 
 import flag_gems
-
-if flag_gems.vendor_name == "cambricon":
-    from flag_gems.runtime.backend._cambricon.ops import grid_sample
-else:
-    from flag_gems.ops import grid_sample
+from flag_gems import grid_sample
 
 from . import conftest as cfg
 

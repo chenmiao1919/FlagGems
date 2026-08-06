@@ -23,11 +23,7 @@ import pytest
 import torch
 
 import flag_gems
-
-if flag_gems.vendor_name == "cambricon":
-    from flag_gems.runtime.backend._cambricon.fused import top_k_per_row_decode
-else:
-    from flag_gems.fused import top_k_per_row_decode
+from flag_gems import top_k_per_row_decode
 
 from . import conftest as cfg
 

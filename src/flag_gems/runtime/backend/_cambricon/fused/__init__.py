@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from .cross_entropy_loss import cross_entropy_loss
+from .DSA.sparse_mla import triton_sparse_mla_fwd_interface
 from .FLA import fused_recurrent_gated_delta_rule_fwd
 from .flash_mla import flash_mla
 from .fused_add_rms_norm import fused_add_rms_norm
@@ -53,6 +54,7 @@ __all__ = [
     "silu_and_mul_out",
     "skip_layer_norm",
     "top_k_per_row_decode",
+    "triton_sparse_mla_fwd_interface",
     "matmuladd",
     "weight_norm",
 ]

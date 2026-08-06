@@ -134,19 +134,13 @@ def gems_flash_fwd(
     q = q.transpose(1, 2)
     k = k.transpose(1, 2)
     v = v.transpose(1, 2)
-    if vendor_name == "cambricon":
-        from flag_gems.runtime.backend._cambricon.ops import attention
-
-        flash_attention_forward = attention.flash_attention_forward
-    else:
-        flash_attention_forward = flag_gems.ops.flash_attention_forward
     (
         out,
         lse,
         seed,
         offset,
         debug_softmax,
-    ) = flash_attention_forward(
+    ) = flag_gems.flash_attention_forward(
         q,
         k,
         v,
